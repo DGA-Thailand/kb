@@ -22,9 +22,5 @@ export default defineConfig({
         directory: 'gdx'
       }
     }]
-  })],
-  output: "server",
-  adapter: netlify({
-	edgeMiddleware: true 
-  })
+  })]
 });
