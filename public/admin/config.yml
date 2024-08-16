@@ -1,0 +1,66 @@
+backend:
+  name: github
+  repo: DGA-Thailand/kb
+  branch: main # Branch to update (optional; defaults to master)
+media_folder: src/assets/images
+public_folder: public
+slug:
+  encoding: 'unicode'
+  sanitize_replacement: '-'
+collections:
+  - name: "czp" # Used in routes, e.g., /admin/collections/blog
+    label: "CZP" # Used in the UI
+    folder: "src/content/docs/czp" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields for each document, usually in frontmatter
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
+  - name: "gdx" # Used in routes, e.g., /admin/collections/blog
+    label: "GDX" # Used in the UI
+    folder: "src/content/docs/gdx" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields for each document, usually in frontmatter
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
+  - name: "digital-id" # Used in routes, e.g., /admin/collections/blog
+    label: "Digital ID" # Used in the UI
+    folder: "src/content/docs/digital-id" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields for each document, usually in frontmatter
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
+  - name: "sme" # Used in routes, e.g., /admin/collections/blog
+    label: "SME One ID" # Used in the UI
+    folder: "src/content/docs/sme" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields for each document, usually in frontmatter
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
+  - name: "edoc" # Used in routes, e.g., /admin/collections/blog
+    label: "e-Document" # Used in the UI
+    folder: "src/content/docs/edoc" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields for each document, usually in frontmatter
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
+  - name: "epayment" # Used in routes, e.g., /admin/collections/blog
+    label: "e-Payment" # Used in the UI
+    folder: "src/content/docs/epayment" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields for each document, usually in frontmatter
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
+  - name: "kiosk" # Used in routes, e.g., /admin/collections/blog
+    label: "Kiosk" # Used in the UI
+    folder: "src/content/docs/kiosk" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields for each document, usually in frontmatter
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
+  - name: "law" # Used in routes, e.g., /admin/collections/blog
+    label: "Law Portal" # Used in the UI
+    folder: "src/content/docs/law" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields for each document, usually in frontmatter
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
