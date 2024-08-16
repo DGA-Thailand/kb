@@ -1,5 +1,5 @@
 ---
-Title: e-Payment
+title: e-Payment
 weight: 30
 date: 2024-03-04T09:50:42.850Z
 ---

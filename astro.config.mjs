@@ -9,17 +9,57 @@ export default defineConfig({
     title: 'DGA Docs',
     customCss: ['@fontsource/noto-sans-thai/400.css', '@fontsource/noto-sans-thai/600.css'],
     social: {
-      github: 'https://github.com/withastro/starlight'
+      github: 'https://github.com/DGA-Thailand/kb'
+    },
+    editLink: {
+      baseUrl: "https://github.com/DGA-Thailand/kb/edit/main/docs/"
     },
     sidebar: [{
       label: 'Citizen Portal',
       autogenerate: {
         directory: 'czp'
       }
-    }, {
+    }, 
+    {
       label: 'GDX',
       autogenerate: {
         directory: 'gdx'
+      }
+    }, 
+    {
+      label: 'Digital ID',
+      autogenerate: {
+        directory: 'digital-id'
+      }
+    }, 
+    {
+      label: 'SME One ID',
+      autogenerate: {
+        directory: 'sme'
+      }
+    }, 
+    {
+      label: 'e-Document',
+      autogenerate: {
+        directory: 'edoc'
+      }
+    }, 
+    {
+      label: 'e-Payment',
+      autogenerate: {
+        directory: 'epayment'
+      }
+    }, 
+    {
+      label: 'Law Portal',
+      autogenerate: {
+        directory: 'law'
+      }
+    }, 
+    {
+      label: 'Smart Kiosk',
+      autogenerate: {
+        directory: 'kiosk'
       }
     }]
   })]
