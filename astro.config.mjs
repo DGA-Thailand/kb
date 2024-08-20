@@ -3,72 +3,70 @@ import starlight from '@astrojs/starlight';
 
 // import netlify from "@astrojs/netlify";
 
+import tailwind from "@astrojs/tailwind";
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [starlight({
-    title: 'DGA Docs',
-    customCss: ['@fontsource/noto-sans-thai/400.css', '@fontsource/noto-sans-thai/600.css'],
+    title: 'Resource Center',
+    logo: {
+      src: './src/assets/images/dga-logo.svg'
+    },
+    customCss: ['@fontsource/ibm-plex-sans-thai'],
     social: {
       github: 'https://github.com/DGA-Thailand/kb'
     },
     editLink: {
-      baseUrl: "https://github.com/DGA-Thailand/kb/edit/main/docs/"
+      baseUrl: "https://dga-kb.netlify.app/admin/"
     },
     sidebar: [{
       label: 'Citizen Portal',
       autogenerate: {
         directory: 'czp'
       }
-    }, 
-    {
+    }, {
       label: 'GDX',
       autogenerate: {
         directory: 'gdx'
       }
-    }, 
-    {
+    }, {
       label: 'Digital ID',
       autogenerate: {
         directory: 'digital-id'
       }
-    }, 
-    {
+    }, {
       label: 'SME One ID',
       autogenerate: {
         directory: 'sme'
       }
-    }, 
-    {
+    }, {
       label: 'e-Document',
       autogenerate: {
         directory: 'edoc'
       }
-    }, 
-    {
+    }, {
       label: 'e-Payment',
       autogenerate: {
         directory: 'epayment'
       }
-    }, 
-    {
+    }, {
       label: 'Law Portal',
       autogenerate: {
         directory: 'law'
       }
-    }, 
-    {
+    }, {
       label: 'Smart Kiosk',
       autogenerate: {
         directory: 'kiosk'
       }
     }]
-  })]
- // ,
- // experimental: {
-//	serverIslands: true	
-//  }
-//  output: "server",
-//  adapter: netlify({
-//	edgeMiddleware: true 
-//  })
+  }), tailwind()]
+  // ,
+  // experimental: {
+  //	serverIslands: true	
+  //  }
+  //  output: "server",
+  //  adapter: netlify({
+  //	edgeMiddleware: true 
+  //  })
 });
