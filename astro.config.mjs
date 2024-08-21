@@ -45,6 +45,11 @@ export default defineConfig({
         directory: 'edoc'
       }
     }, {
+      label: 'Service Request and Tracking (SRAT)',
+      autogenerate: {
+        directory: 'backend'
+      }
+    }, {
       label: 'e-Payment',
       autogenerate: {
         directory: 'epayment'
