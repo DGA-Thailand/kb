@@ -2,8 +2,8 @@ backend:
   name: github
   repo: DGA-Thailand/kb
   branch: main # Branch to update (optional; defaults to master)
-media_folder: src/assets
-public_folder: public
+media_folder: "public/uploads"
+public_folder: "/uploads"
 slug:
   encoding: 'unicode'
   sanitize_replacement: '-'
