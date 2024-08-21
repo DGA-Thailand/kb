@@ -16,9 +16,6 @@ export default defineConfig({
     social: {
       github: 'https://github.com/DGA-Thailand/kb'
     },
-    editLink: {
-      baseUrl: "https://dga-kb.netlify.app/admin/"
-    },
     sidebar: [{
       label: 'Citizen Portal',
       autogenerate: {
@@ -66,12 +63,4 @@ export default defineConfig({
       }
     }]
   }), tailwind()]
-  // ,
-  // experimental: {
-  //	serverIslands: true	
-  //  }
-  //  output: "server",
-  //  adapter: netlify({
-  //	edgeMiddleware: true 
-  //  })
 });
