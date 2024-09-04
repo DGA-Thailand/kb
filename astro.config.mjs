@@ -23,7 +23,7 @@ export default defineConfig({
       {
         tag: 'script',
         // Content truncated for brevity.
-        content: "(function(w,d,s,l,i){ ... })(window,document,'script','dataLayer','G-0JY4JVH3K5');",
+        content: "window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}; gtag('js', new Date()); gtag('config', 'G-0JY4JVH3K5');",
       },
     ],
     // Replace the built-in <SkipLink/> component.
