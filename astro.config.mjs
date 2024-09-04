@@ -9,9 +9,9 @@ import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://kb.dga.or.th',
   integrations: [starlight({
     title: 'Resource Center',
-    site: 'https://kb.dga.or.th',
     logo: {
       src: './src/assets/images/dga-logo.svg'
     },
