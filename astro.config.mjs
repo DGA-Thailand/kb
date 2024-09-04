@@ -16,6 +16,16 @@ export default defineConfig({
     social: {
       github: 'https://github.com/DGA-Thailand/kb'
     },
+    head: [
+      <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-0JY4JVH3K5"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0JY4JVH3K5');
+      </script>
+    ],
     sidebar: [{
       label: 'Citizen Portal',
       autogenerate: {
