@@ -11,6 +11,7 @@ import tailwind from "@astrojs/tailwind";
 export default defineConfig({
   integrations: [starlight({
     title: 'Resource Center',
+    site: 'https://kb.dga.or.th',
     logo: {
       src: './src/assets/images/dga-logo.svg'
     },
