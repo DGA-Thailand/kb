@@ -2,7 +2,9 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
 // import netlify from "@astrojs/netlify";
-
+import mdx from '@astrojs/mdx';
+import partytown from '@astrojs/partytown'
+import sitemap from '@astrojs/sitemap';
 import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
@@ -16,16 +18,19 @@ export default defineConfig({
     social: {
       github: 'https://github.com/DGA-Thailand/kb'
     },
+    // Add a script for Google Tag Manager.
     head: [
-      <!-- Google tag (gtag.js) -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-0JY4JVH3K5"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-0JY4JVH3K5');
-      </script>
+      {
+        tag: 'script',
+        // Content truncated for brevity.
+        content: "(function(w,d,s,l,i){ ... })(window,document,'script','dataLayer','G-0JY4JVH3K5');",
+      },
     ],
+    // Replace the built-in <SkipLink/> component.
+    components: {
+      // Relative path to the custom component.
+      SkipLink: './src/components/SkipLink.astro',
+    },
     sidebar: [{
       label: 'Citizen Portal',
       autogenerate: {
@@ -72,5 +77,13 @@ export default defineConfig({
         directory: 'kiosk'
       }
     }]
-  }), tailwind()]
+  }), 
+  tailwind(),
+  mdx(), 
+  sitemap(),
+  partytown({
+      config: {
+        forward: ["dataLayer.push"],
+      },
+  }),]
 });
