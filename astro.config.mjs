@@ -33,6 +33,11 @@ export default defineConfig({
       SkipLink: './src/components/SkipLink.astro',
     },
     sidebar: [{
+      label: 'Cloud First Policy',
+      autogenerate: {
+        directory: 'cloud'
+      }
+    }, {
       label: 'Citizen Portal',
       autogenerate: {
         directory: 'czp'
