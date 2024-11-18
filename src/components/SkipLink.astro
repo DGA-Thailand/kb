@@ -3,16 +3,22 @@ import type { Props } from '@astrojs/starlight/props'
 import Default from '@astrojs/starlight/components/SkipLink.astro'
 ---
 
-<!-- Add the noscript tag for Google Tag Manager. -->
-<noscript>
-  <iframe
-    src="https://www.googletagmanager.com/gtag/js?id=G-0JY4JVH3K5"
-    height="0"
-    width="0"
-    style="display:none;visibility:hidden"
-  >
-  </iframe>
-</noscript>
+<!-- Google tag (gtag.js) -->
+<script
+  is:inline
+  type="text/partytown"
+  src="https://www.googletagmanager.com/gtag/js?id=G-0JY4JVH3K5"
+></script>
+
+<script is:inline type="text/partytown">
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+
+  gtag("config", "G-0JY4JVH3K5");
+</script>
 
 <!-- Render the default <SkipLink/> component. -->
 <Default {...Astro.props}><slot /></Default>
