@@ -43,6 +43,11 @@ export default defineConfig({
         directory: 'czp'
       }
     }, {
+      label: 'Biz Portal',
+      autogenerate: {
+        directory: 'biz'
+      }
+    }, {
       label: 'GDX',
       autogenerate: {
         directory: 'gdx'

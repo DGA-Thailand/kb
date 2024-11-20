@@ -1,0 +1,172 @@
+---
+title: "แนวทางการเชื่อมโยงข้อมูลผู้ใช้งานแบบ Single Sign-On (SSO) และการเชื่อมโยงสถานะคำขอ"
+weight: 3
+---
+
+## ขั้นตอนการเรียกใช้ข้อมูลผ่าน API (แบบ single sign on)
+
+### 1 การขอ Token สำหรับเรียกใช้งาน Web Service
+
+| หัวข้อ | รายละเอียด |
+| --- | --- |
+| API [Production] | https://api.egov.go.th/ws/auth/validate?ConsumerSecret=[Secret]&AgentID=[เลขประจำตัวประชาชน] |
+| API [TEST] | https://api.egov.go.th/ws/auth/validate?ConsumerSecret=[Secret]&AgentID=[เลขประจำตัวประชาชน] |
+| Method | GET |
+
+**Request Headers**
+
+| รายการข้อมูล | รายละเอียด |
+| --- | --- | 
+| Consumer-Key | Consumer-Key ที่ได้ลงทะเบียนกับ สพร. (ระบบส่งให้ทาง e-Mail ที่ ลงทะเบียนไว้) |
+| Content-Type | กำหนดค่าดังนี้ : application/x-www-form-urlencoded; charset=utf-8 | 
+
+**Request Parameters**
+
+| รายการข้อมูล | รายละเอียด |	|
+| --- | --- | --- |
+| ConsumerSecret | เช่น ConsumerSecret=xxxxxxxxxxxxxx | Required | 
+| AgentID | เลขประจำตัวประชาชน 13 หลัก เช่น AgentID=1234567890123 หรือ ชื่อ ระบบภาษาอังกฤษ กรณีเรียก API Personal Signing ต้อง กำหนด AgentID เป็นเลขประจำตัว ประชาชนของผู้เซ็นเอกสารเท่านั้น | Required |
+ 
+**Response**
+
+```json
+{
+"Result": "8e1ac089-0000-aaaa-0000-403c0c9ab867"
+}
+```
+
+**Response Parameters**
+
+| รายการข้อมูล | รายละเอียด |
+| --- | --- | 
+| Result | Token String สำหรับใช้ในการเรียก API ต่างๆ
+(กรณีขอ Token ไม่สำเร็จ หรือ error อื่นๆ ให้ทำการเรียก API ใหม่ อีกครั้ง จนกว่าจะได้ Token ไปใช้เรียกเรียกร่วมกับ API อื่นๆ) |
+
+### 2 การสร้างใบคำขอ
+
+| หัวข้อ | รายละเอียด |
+| --- | --- |
+| API [Production] | https://api.egov.go.th/ws/dga/bizportal/applicationrequest/import |
+| API [TEST] | https://api.egov.go.th/ws/dga/bizportal/uat/applicationrequest/import |
+| Method | POST |
+
+**Request Headers**
+
+| รายการข้อมูล | รายละเอียด |
+| --- | --- | 
+| Consumer-Key | Consumer-Key ที่ได้ลงทะเบียนกับ สพร. (ระบบส่งให้ทาง e-Mail ที่ ลงทะเบียนไว้) |
+| Content-Type | กำหนดค่าดังนี้ : application/json |
+| Token	| Token String ที่ได้จากการ API ขอ Token | 
+ 
+**Request body**
+
+```json
+{
+    "IdentityId": "[IdentityId]", 
+    "IdentityType": "[IdentityType]", 
+    "ApplicationId": "123",
+    "Data": {
+        "Name": "DGA",
+        "Url": "https://form",
+        "ReferenceId": “8e1ac089-0000-aaaa-0000-403c0c9ab867” "ReferenceNumber" : "202201300001",
+    }
+}
+//// โดยที่ ReferenceId และ ReferenceNumber เป็นค่าที่ทางหน่วยงานต้องตั้งขึ้นและต้องไม่ซ้ำกัน
+```
+
+**Request Body Parameters**
+
+| รายการข้อมูล | รายละเอียด | |
+| --- | --- | --- |
+| IdentityId | เลขบัตรประจำตัวประชาชน หรือเลขนิติบุคคลของผู้ยื่น | Required |
+| IdentityType | ประเภทของผู้ยื่น แบ่งเป็น 3 กลุ่ม คือ 1 "Citizen" : กรณีบุคคลไทย 2 "Juristic" : กรณีนิติบุคคล 3 "Foreigner" : กรณีบุคคลต่างชาติ | Required |
+| ApplicationId	| หมายเลขใบคำขออนุญาต (สพร. เป็นคนกำหนดให้) | Required |
+| Data | ข้อมูลคำขอของหน่วยงาน<br />Name (อักษรย่อชื่อหน่วยงานภาษาอังกฤษ)<br />Url (Url หน้ารายละเอียดใบคำขอ)<br />ReferenceId (หมายเลขอ้างอิงใบคำขอ transactionId )<br />ReferenceNumber (หมายเลขอ้างอิงใบคำขอ) | Required |
+ 
+**Response**
+
+```json
+{
+"Status": 0, "Message": "",
+"ErrorMessage": "",
+"Data": {
+"RequestId": "55ca12ae-5b70-41c0-aca0-dbc81c32a022",
+}
+}
+```
+
+**Response Parameters**
+
+| รายการข้อมูล | รายละเอียด | 
+| --- | --- | 
+| Status | สถานะ<br />0 (ดำเนินการสำเร็จ)<br />3 (ดำเนินการไม่สำเร็จ) |
+| Message | ข้อความแสดงผลการดำเนินการ |
+| ErrorMessage | ข้อความแสดงผลการดำเนินการหาก Error |
+| Data | RequestId (หมายเลขรายการคำขอที่ได้จากขั้นตอนสร้างคำขอ ของ สพร.) |
+
+### 3 การปรับปรุงสถานะใบคำขอ
+
+| หัวข้อ | รายละเอียด |
+| --- | --- |
+| API [Production] | https://api.egov.go.th/ws/dga/bizportal/applicationrequest/update |
+| API [TEST] | https://api.egov.go.th/ws/dga/bizportal/uat/applicationrequest/update |
+| Method | POST |
+ 
+**Request Headers**
+
+| รายการข้อมูล | รายละเอียด | 
+| --- | --- | 
+| Consumer-Key | Consumer-Key ที่ได้ลงทะเบียนกับ สพร. (ระบบส่งให้ทาง e-Mail ที่ลงทะเบียนไว้) |
+| Content-Type | กำหนดค่าดังนี้ : application/json |
+| Token	| Token String ที่ได้จากการ API ขอ Token |
+
+**Request body**
+
+```json
+{
+"IdentityId": [IdentityId], "IdentityType": [IdentityType], "ApplicationId": "123",
+"RequestId": "8e1ac089-0000-aaaa-0000-403c0c9ab867", "Status": "CHECK",
+"StatusOther": "WAITING_USER_WORKING",
+"Remark": "",
+“Option”: {
+“ExternalButtonOption”:
+{
+“Name”: "",
+“Url”: "",
+“Description”: ""
+}
+}
+}
+```
+
+**Request Body Parameters**
+
+| รายการข้อมูล | รายละเอียด | |
+| --- | --- | --- | 
+| IdentityId | เลขบัตรประจำตัวประชาชน หรือเลขนิติบุคคลของผู้ยื่น | Required |
+| IdentityType | ประเภทของผู้ยื่น แบ่งเป็น 3 กลุ่ม คือ<br />1 "Citizen" : กรณีบุคคลไทย<br />2 "Juristic" : กรณีนิติบุคคล<br />3 "Foreigner" : กรณีบุคคลต่างชาติ | Required | 
+| ApplicationId	| หมายเลขใบคำขออนุญาต (สพร. เป็นคน กำหนดให้) | Required |
+| RequestId | หมายเลขรายการคำขอที่ได้จากขั้นตอนสร้างคำ ร้อง (สพร. เป็นคนกำหนดให้) | Required |
+| Status | สถานะใบคำขอ มี 6 สถานะ คือ<br />1 CHECK (ตรวจสอบข้อมูลเบื้องต้น)<br />2 PENDING (อยู่ในขั้นตอนพิจารณา)<br />3	APPROVED_WAITING_PAY_FEE (อนุมัติ แล้วรอชำระค่าธรรมเนียม)<br />4	PAID_FEE_CREATING_LICENSE (ชำระเงิน เรียบร้อยแล้วกำลังดำเนินการออกใบอนุญาต)<br />5 COMPLETED (การดำเนินการเสร็จสมบูรณ์)<br />6 REJECTED (ยกเลิกการดำเนินการ) กรณีนี้กำหนดเป็น "CHECK" หรือ "PENDING" ขึ้นอยู่กับว่าจะมีการขอเอกสารเพิ่มเติมนั้นตอนใด | Required |
+| StatusOther | สถานะการดำเนินการ มี 3 สถานะ คือ<br />1	WAITING_AGENT_WORKING (เจ้าหน้าที่ ดำเนินการ)<br />2	WAITING_USER_WORKING (ผู้ยื่นคำร้อง ดำเนินการ)<br />3 DONE (การยื่นคำร้องเสร็จสมบูรณ์)<br />กรณีนี้ กำหนดเป็น "WAITING_USER_WORKING" เนื่องจากผู้ยื่น คำขอต้องดำนินการในขั้นตอนถัดไป | Required |	
+| Remark | หมายเหตุ | |	
+| Option | ExternalButtonOption. Name (ชื่อหน้า Page ที่ต้องการเปิดฝั่งหน่วยงานในแต่ละ สถานะ)<br />ExternalButtonOption. Url	( link Url Page ที่เปิดฝั่งหน่วยงานในแต่ละสถานะ) ExternalButtonOption. Description (รายละเอียดหน้า Page ที่ต้องการเปิดฝั่ง หน่วยงานในแต่ละสถานะ) |
+
+**Response**
+
+```json
+{
+"status": 0,
+"message": "[000] สำเร็จ(ระบบส่งSMSสำเร็จ)(ระบบส่งEmailสำเร็จ)"
+"errorMessage": ""
+}
+```
+
+**Response Parameters**
+
+| รายการข้อมูล | รายละเอียด |
+| --- | --- |
+| Status | สถานะ<br />0 (ดำเนินการสำเร็จ)<br />3 (ดำเนินการไม่สำเร็จ) |
+| Message | ข้อความแสดงผลการดำเนินการ |
+| ErrorMessage | ข้อความแสดงผลการดำเนินการหาก Error |
+

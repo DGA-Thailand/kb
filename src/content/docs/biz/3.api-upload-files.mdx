@@ -1,0 +1,169 @@
+---
+title: "คู่มือใช้งานการอัพโหลดและดาวน์โหลดไฟล์เอกสาร"
+weight: 4
+---
+
+### 1. การอัพโหลดไฟล์เอกสารไปยังระบบไฟล์เซิร์ฟเวอร์
+
+สามารถเรียกใช้งานผ่าน Api Service  Upload ไฟล์ได้ที่ https://ws.ega.or.th/bizportal/api/File/Upload  (สำหรับ Environment Development)
+
+**Request**
+
+```
+   POST: https://ws.ega.or.th/bizportal/api/File/Upload 
+   Header
+   Content-Type: multipart/form-data
+
+   Body  ระบุการส่งข้อมูลเป็นรูปแบบ form-data
+   file:  [ไฟล์เอกสารที่จะ Upload]
+```
+
+**Response**
+
+```json
+   {
+        "fileId": "638ecec170b8b31f247a8e0b",
+        "name": "1669701888749.jpg",
+        "contentType": "image/jpeg",
+        "fileSize": 237997,
+         "fileUrl": ""
+   }
+```
+
+**Response parameter**
+
+| รายการข้อมูล | รายละเอียด | 
+| --- | --- |
+| fileId | รหัสอ้างอิงไฟล์เอกสารที่อัพโหลด |
+| name | ชื่อไฟล์เอกสารที่อัพโหลด |
+| contentType | รูปแบบไฟล์เอกสารที่อัพโหลด | 
+| fileSize | ขนาดไฟล์เอกสารที่อัพโหลด |
+| fileUrl | Url เอกสาร [Optional] |
+
+## 2. การขอ Token ก่อนเรียกใช้งาน Service DownloadFilePath 
+
+Request
+
+```
+GET: https://api.egov.go.th/ws/auth/validate?ConsumerSecret=[Secret]&AgentID=[CitizenId]
+
+Headers
+Consumer-Key: [ConsumerKey]
+``` 
+
+**Request Parameter**
+
+| รายการข้อมูล | รายละเอียด | |
+| --- | --- | --- |
+| ConsumerKey | ConsumerKey ที่ได้ลงทะเบียนกับ สพร. (ระบบส่งให้ทาง e-Mail ที่ลงทะเบียนไว้) | Required |
+| Secret | Secret ที่ได้ลงทะเบียนกับ สพร. (ระบบส่งให้ทาง e-Mail ที่ลงทะเบียนไว้) | Required | 
+| CitizenId | หมายเลขประจำตัวบัตรประชาชน | Required |
+
+
+**Response**
+
+```json
+   {
+     "Result": "1aba532f-d834-45f8-b19c-da6b52bc4432"
+   }
+```
+
+**Response parameter**
+
+| รายการข้อมูล | รายละเอียด |
+| --- | --- |
+| Result | Token สำหรับการเรียกใช้งาน API Service DownloadFilePath |
+
+**หมายเหตุ**
+
+แอพพลิเคชั่นหนึ่งๆ ของหน่วยงานจะใช้ Consumer-Key และ ConsumerSecret ในการ Validation เพื่อเรียกใช้งาน API ได้ (เปรียบเสมือน User Name และ Password ของแอพพลิเคชั่น)
+ผู้ดูแลระบบของหน่วยงานสามารถลงทะเบียนการขอใช้ API ข้อมูล และขอ Consumer-Key, ConsumerSecret กับ สพร. ได้ที่สอบถามรายละเอียดเพิ่มเติมได้ที่ contact@dga.or.thหรือ โทร. 0-2612-6060
+
+## 3.การขอ URL ไฟล์เอกสารจากระบบไฟล์เซิร์ฟเวอร์
+
+สามารถเรียกใช้ผ่าน Api Service  DownloadFilePath ได้ที่ https://api.egov.go.th/ws/dga/dev/bizportal/downloadfilepath  (สำหรับ Environment Development)
+
+**Request**
+
+``` 
+   GET: https://api.egov.go.th/ws/dga/dev/bizportal/downloadfilepath?fileid=[fileId]&contentType=[contentType]
+   Headers
+  
+   Consumer-Key: [ConsumerKey]
+   Token:  [Token]
+```
+
+**Request Parameter**
+
+| รายการข้อมูล | รายละเอียด | |
+| --- | --- | --- |
+| ConsumerKey | ConsumerKey ที่ได้ลงทะเบียนกับ สพร. (ระบบส่งให้ทาง e-Mail ที่ลงทะเบียนไว้) | Required |
+| Token | Token String ที่ได้จากการ API ขอ Token (จากหัวข้อ 2.) | Required |
+| fileId | รหัสอ้างอิงไฟล์เอกสารที่อัพโหลด (จากหัวข้อ 1.) | Required |
+| contentType | รูปแบบไฟล์เอกสารที่อัพโหลด (จากหัวข้อ 1.) | Required |
+ 
+**Response**
+
+```
+   {
+       "status": 0,
+       "message": "[000] สำเร็จ",
+        "errorMessage": null,
+        "data": "https://file.testapp2.dga.or.th/api/file/638b179a70b8b31ae0a18b14?accesstoken=e203e3dc-cb8d-466c-ba66-88a170eeeea5"
+   }
+```
+
+**Response parameter**
+
+| รายการข้อมูล | รายละเอียด |
+| --- | --- | 
+| status | “0”  สถานะการขอ URL ไฟล์เอกสาร  สำเร็จ <br />“300” สถานะไม่พบข้อมูล URL ไฟล์เอกสาร<br />“999” สถานะ Error |
+| message | ข้อความสถานะสำเร็จ/หรือไม่สำเร็จ |
+| errorMessage | ข้อความรายละเอียดของ Error |
+| data | URL ไฟล์เอกสาร (URL ไฟล์เอกสาร สามารถเปิดใช้งานเพื่อดูเอกสารได้เพียงครั้งเดียว) |
+
+**หมายเหตุ**
+
+สามารถใช้ URL ไฟล์เอกสารเพื่อเปิดเรียกดูเอกสารได้เพียงครั้งเดียวเนื่องจาก ใน URL ไฟล์เอกสารนั้นมีการระบุ AccessToken เป็น One Times Token ถ้าต้องการเปิดดูไฟล์เอกสารอีกครั้งสามารถเรียก  Api Service  DownloadFilePath “https://api.egov.go.th/ws/dga/dev/bizportal/downloadfilepath” เพื่อ ขอ URL ไฟล์เอกสารใหม่ได้อีกครั้ง
+
+
+## 4.การลบไฟล์เอกสารที่อัพโหลดแล้วออกจากระบบไฟล์เซิร์ฟเวอร์
+
+สามารถเรียกใช้ผ่าน Api Service  DeleteFile ได้ที่ https://api.egov.go.th/ws/dga/dev/bizportal/deletefilepath (สำหรับ Environment Development)
+
+**Request**
+
+```
+  DELETE: https://api.egov.go.th/ws/dga/dev/bizportal/deletefilepath?fileId=[fileId]
+   Headers
+   Consumer-Key: [ConsumerKey]
+   Token:  [Token]
+```
+
+**Request Parameter**
+
+| รายการข้อมูล | รายละเอียด | |
+| --- | --- | --- |
+| ConsumerKey | ConsumerKey ที่ได้ลงทะเบียนกับ สพร. (ระบบส่งให้ทาง e-Mail ที่ลงทะเบียนไว้) | Required |
+| Token | Token String ที่ได้จากการ API ขอ Token (จากหัวข้อ 2.) | Required |
+| fileId | รหัสอ้างอิงไฟล์เอกสารที่อัพโหลด (จากหัวข้อ 1.) | Required |
+
+**Response**
+
+```json
+   {
+       "result": “Success”,
+       "message": "Deleted"
+  }
+```
+
+**Response parameter**
+
+| รายการข้อมูล | รายละเอียด |
+| --- | --- |
+| result | “Success” สถานะลบไฟล์สำเร็จ |
+| message | “Deleted” ข้อความลบไฟล์สำเร็จ |
+
+**หมายเหตุ**
+
+กรณีลบไฟล์สำเร็จ Http Response Status จะเท่ากับ 200 กรณีลบไม่สำเร็จหรือไม่พบเลข fileId  Http Response Status จะเท่ากับ 500
