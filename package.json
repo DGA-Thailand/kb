@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "@astrojs/check": "0.9.2",
-    "@astrojs/markdown-satteri": "^0.3.0",
-    "@astrojs/mdx": "^6.0.3",
+    "@astrojs/markdown-satteri": "0.2.2",
+    "@astrojs/mdx": "6.0.2",
     "@astrojs/partytown": "^2.1.7",
     "@astrojs/sitemap": "^3.7.2",
     "@astrojs/starlight": "^0.40.0",
