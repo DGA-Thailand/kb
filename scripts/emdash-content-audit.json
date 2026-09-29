@@ -1,0 +1,145 @@
+{
+  "total": 43,
+  "needsReview": 19,
+  "entries": [
+    {
+      "source": "biz/1.miniapp.md",
+      "route": "/biz/1miniapp",
+      "issues": [
+        "MDX expression requires manual review"
+      ]
+    },
+    {
+      "source": "backend/api.md",
+      "route": "/backend/api",
+      "issues": [
+        "MDX expression requires manual review"
+      ]
+    },
+    {
+      "source": "biz/2.api-sso-status-update.mdx",
+      "route": "/biz/2api-sso-status-update",
+      "issues": [
+        "MDX expression requires manual review"
+      ]
+    },
+    {
+      "source": "biz/3.api-upload-files.mdx",
+      "route": "/biz/3api-upload-files",
+      "issues": [
+        "MDX expression requires manual review"
+      ]
+    },
+    {
+      "source": "czp/faq-3.mdx",
+      "route": "/czp/faq-3",
+      "issues": [
+        "custom MDX component"
+      ]
+    },
+    {
+      "source": "czp/faq-2.mdx",
+      "route": "/czp/faq-2",
+      "issues": [
+        "custom MDX component"
+      ]
+    },
+    {
+      "source": "czp/about.mdx",
+      "route": "/czp/about",
+      "issues": [
+        "custom MDX component"
+      ]
+    },
+    {
+      "source": "edoc/e-document-signing.mdx",
+      "route": "/edoc/e-document-signing",
+      "issues": [
+        "local asset reference must be uploaded to EmDash media"
+      ]
+    },
+    {
+      "source": "epayment/e-payment-cgd.md",
+      "route": "/epayment/e-payment-cgd",
+      "issues": [
+        "MDX expression requires manual review"
+      ]
+    },
+    {
+      "source": "epayment/e-payment-ktb.md",
+      "route": "/epayment/e-payment-ktb",
+      "issues": [
+        "MDX expression requires manual review"
+      ]
+    },
+    {
+      "source": "digital-id/2.registration.mdx",
+      "route": "/digital-id/2registration",
+      "issues": [
+        "custom MDX component",
+        "local asset reference must be uploaded to EmDash media"
+      ]
+    },
+    {
+      "source": "gdx/1.about.mdx",
+      "route": "/gdx/1about",
+      "issues": [
+        "custom MDX component",
+        "local asset reference must be uploaded to EmDash media"
+      ]
+    },
+    {
+      "source": "gdx/3.howto.mdx",
+      "route": "/gdx/3howto",
+      "issues": [
+        "local asset reference must be uploaded to EmDash media"
+      ]
+    },
+    {
+      "source": "gdx/4api.mdx",
+      "route": "/gdx/4api",
+      "issues": [
+        "custom MDX component",
+        "local asset reference must be uploaded to EmDash media",
+        "MDX expression requires manual review"
+      ]
+    },
+    {
+      "source": "gdx/2.gettingstarted.md",
+      "route": "/gdx/2gettingstarted",
+      "issues": [
+        "local asset reference must be uploaded to EmDash media"
+      ]
+    },
+    {
+      "source": "gdx/7.api-dbd.md",
+      "route": "/gdx/7api-dbd",
+      "issues": [
+        "MDX expression requires manual review"
+      ]
+    },
+    {
+      "source": "gdx/6.api-linkage.md",
+      "route": "/gdx/6api-linkage",
+      "issues": [
+        "local asset reference must be uploaded to EmDash media",
+        "MDX expression requires manual review"
+      ]
+    },
+    {
+      "source": "gdx/5.api-lasercode.md",
+      "route": "/gdx/5api-lasercode",
+      "issues": [
+        "local asset reference must be uploaded to EmDash media",
+        "MDX expression requires manual review"
+      ]
+    },
+    {
+      "source": "sme/manual.md",
+      "route": "/sme/manual",
+      "issues": [
+        "local asset reference must be uploaded to EmDash media"
+      ]
+    }
+  ]
+}

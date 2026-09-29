@@ -70,6 +70,41 @@ All commands are run from the root of the project, from a terminal:
 
 Contents within kb.dga.or.th, and thus in this repo, are maintained by DGA staffs. If you have enquiries please contact contact@dga.or.th
 
+### EmDash and Cloudflare migration
+
+The site now runs in Astro server mode and includes EmDash for editor-managed
+content. Existing Starlight pages remain live while the imported documents are
+reviewed in the EmDash admin panel at `/_emdash/admin/`; this avoids changing
+public URLs during the migration.
+
+`npm run seed:legacy` converts the current `src/content/docs` Markdown and MDX
+files into `seed/legacy-docs.json`, which EmDash uses on the first setup of an
+empty database. It also writes `scripts/emdash-content-audit.json`. Review every
+entry in that audit before moving public routes to EmDash: custom MDX components
+and `@assets` files need manual conversion or upload to the EmDash media library.
+
+For Cloudflare development and deployment, use Node 22.12 or later and run:
+
+```bash
+npm run cf:dev
+npm run cf:deploy
+```
+
+For local EmDash authoring without a passkey, run `npm run cf:dev:authoring`
+instead. This is a local-only Worker build that enables the dev-bypass URL at
+`http://localhost:8787/_emdash/api/setup/dev-bypass?redirect=/_emdash/admin`.
+Do not use this command for a production build or deployment.
+
+The canonical production URL is configured as `EMDASH_SITE_URL` in
+`wrangler.jsonc`. For local setup, create `.dev.vars` containing
+`EMDASH_SITE_URL=http://localhost:8787`; Wrangler loads this file only during
+local development. The file is git-ignored.
+
+The first production deployment provisions the D1 database and R2 media bucket
+named in `wrangler.jsonc`. Log in with `npx wrangler login` first. Do not remove
+the existing Netlify site until the Worker URL and EmDash setup wizard have been
+verified.
+
 ### License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
