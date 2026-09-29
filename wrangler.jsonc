@@ -4,8 +4,9 @@
   "main": "./src/worker.ts",
   "compatibility_date": "2026-09-29",
   "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
   "vars": {
-    "EMDASH_SITE_URL": "https://kb.dga.or.th"
+    "EMDASH_SITE_URL": "https://dga-kb-emdash.asisunyapoth.workers.dev"
   },
   "d1_databases": [
     {
