@@ -8,10 +8,17 @@
   "vars": {
     "EMDASH_SITE_URL": "https://dga-kb-emdash.asisunyapoth.workers.dev"
   },
+  "kv_namespaces": [
+    {
+      "binding": "SESSION",
+      "id": "cfe72545b7ea4fddb8412c3e8f24902c"
+    }
+  ],
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "dga-kb-emdash"
+      "database_name": "dga-kb-emdash",
+      "database_id": "67fc89d8-2fbf-4fe7-bd59-c4acde3b176f"
     }
   ],
   "r2_buckets": [
